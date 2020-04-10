@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_app/src/screens/home_page.dart';
+import 'package:ifood_app/src/screens/cliente/home_cliente.dart';
+import 'package:ifood_app/src/screens/restaurante/home_restaurante.dart';
 import 'package:ifood_app/src/screens/signup.dart';
 
 class Login extends StatelessWidget {
@@ -56,7 +57,7 @@ class Login extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (BuildContext context) => HomePage()));
+                            builder: (BuildContext context) => HomeCliente()));
                   },
                   color: Color(0xffDF4723),
                   textColor: Colors.white,
@@ -80,13 +81,13 @@ class Login extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Container(
-                height: 50,
+                height: 60,
                 width: 335,
                 child: RaisedButton(
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Signup()));
                   },
-                  color: Color(0xffDF4723),
+                  color: Color(0xffDF4788),
                   textColor: Colors.white,
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(9.0)),
