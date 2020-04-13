@@ -13,7 +13,7 @@ class ButtonIfood extends StatelessWidget {
       width: 335,
       child: RaisedButton(
         onPressed: () {
-          //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Devs2()));
+          onPressed();
         },
         color: Color(0xffDF4723),
         textColor: Colors.white,

@@ -1,77 +1,103 @@
 import 'package:flutter/material.dart';
+import 'package:ifood_app/src/controllers/home_cliente_controller.dart';
 
 class Historico extends StatefulWidget {
-  Historico({Key key}) : super(key: key);
+  final int id;
+  Historico({Key key, this.id}) : super(key: key);
 
   @override
   _HistoricoState createState() => _HistoricoState();
 }
 
 class _HistoricoState extends State<Historico> {
+  HomeClienteController homeClienteController = HomeClienteController();
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: <Widget>[
-          ExpansionTile(
-            title: ListTile(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    print(widget.id);
+    return FutureBuilder(
+      future: homeClienteController.historicoPedidos(widget.id),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        print("HISTORICO PEDIDO:");
+        print(snapshot.data);
+        return ListView.builder(
+          itemCount: snapshot.data["pedidos"].length,
+          itemBuilder: (BuildContext context, int index) {
+            var precoTotal = snapshot.data["pedidos"][index]["preco_total"];
+            String nome = snapshot.data["pedidos"][index]["nome"];
+            String data = snapshot.data["pedidos"][index]["data"];
+            var idPedido = snapshot.data["pedidos"][index]["id_pedido"];
+            // String descricao = snapshot.data["cardapio"][index]["descricao"];
+            // var preco = snapshot.data["cardapio"][index]["preco"];
+            return Center(
+              child: Column(
                 children: <Widget>[
-                  Text(
-                    "Pedido 1",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ExpansionTile(
+                    title: ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "$nome",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text("Total: RS $precoTotal"),
+                        ],
+                      ),
+                      subtitle: Text("$data"),
+                    ),
+                    children: <Widget>[
+                      FutureBuilder(
+                        future: homeClienteController.comidasPedido(idPedido),
+                        builder: (context, snapshot) {
+                          if(!snapshot.hasData) {
+                            return Center(child: CircularProgressIndicator(),);
+                          } 
+
+                          print("comidas do pedido: id : $idPedido");
+                          print(snapshot.data);
+
+                          return Container(
+                        height: snapshot.data["comidas"].length * 58.1,
+                        child: ListView.builder(
+                          itemCount: snapshot.data["comidas"].length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    "${snapshot.data["comidas"][index]["nome"]}",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text("Total: RS ${snapshot.data["comidas"][index]["preco"]}"),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                        },
+                      )
+                    ],
                   ),
-                  Text("Total: RS 24,00"),
+                  Divider(
+                    height: 1.0,
+                    color: Colors.black,
+                  ),
                 ],
               ),
-              subtitle: Text("2020"),
-            ),
-            children: <Widget>[
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Comida 1",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text("Total: RS 24,00"),
-                  ],
-                ),
-              ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Comida 1",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text("Total: RS 24,00"),
-                  ],
-                ),
-              ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Comida 1",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text("Total: RS 24,00"),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Divider(
-            height: 1.0,
-            color: Colors.black,
-          ),
-        ],
-      ),
+            );
+          },
+        );
+      },
     );
   }
 }

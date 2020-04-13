@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_app/src/screens/add_food.dart';
-import 'package:ifood_app/src/screens/cardapio.dart';
+import 'package:ifood_app/src/screens/restaurante/add_food.dart';
+import 'package:ifood_app/src/screens/restaurante/cardapio.dart';
 import 'package:ifood_app/src/screens/historico.dart';
 import 'package:ifood_app/src/screens/restaurante/relatorio.dart';
 import 'package:ifood_app/src/utils/ColorsIfood.dart';
 
 class HomeRestaurante extends StatefulWidget {
-  HomeRestaurante();
+  final Map<String, dynamic> usuario;
+  HomeRestaurante({this.usuario});
 
   @override
   _HomeRestauranteState createState() => _HomeRestauranteState();
@@ -26,7 +27,8 @@ class _HomeRestauranteState extends State<HomeRestaurante> {
     return Scaffold(
       backgroundColor: Color(0xfff5f5f5),
       appBar: AppBar(
-        title: Text("HomeRestaurante s"),
+        title: Text("${widget.usuario["nome"]}"),
+        centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -34,7 +36,7 @@ class _HomeRestauranteState extends State<HomeRestaurante> {
           },
         ),
       ),
-      body: [Cardapio(), Relatorio(), Historico()].elementAt(screenIndex),
+      body: [Cardapio(usuario: widget.usuario), Relatorio(), Historico()].elementAt(screenIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -59,7 +61,7 @@ class _HomeRestauranteState extends State<HomeRestaurante> {
               context,
               MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      AddComida("Adicionar comida")));
+                      AddComida(title: "Adicionar comida", idRestaurante: widget.usuario["id"])));
         },
         elevation: 2,
         autofocus: false,

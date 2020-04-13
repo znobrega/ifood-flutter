@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_app/src/screens/home_page.dart';
+import 'package:ifood_app/src/screens/cliente/home_cliente.dart';
 
 class Signup extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -303,7 +303,7 @@ Widget formRestaurante(BuildContext context) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => HomePage()));
+                          builder: (BuildContext context) => HomeCliente()));
                 },
                 color: Color(0xffDF4723),
                 textColor: Colors.white,

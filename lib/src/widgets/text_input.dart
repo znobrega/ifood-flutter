@@ -12,7 +12,6 @@ class ButtonIfood extends StatelessWidget {
       height: 60,
       width: 335,
       child: TextField(
-        
         obscureText: true,
         decoration: InputDecoration(
           hintText: hint,
