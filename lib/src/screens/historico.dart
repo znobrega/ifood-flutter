@@ -28,7 +28,7 @@ class _HistoricoState extends State<Historico> {
         return ListView.builder(
           itemCount: snapshot.data["pedidos"].length,
           itemBuilder: (BuildContext context, int index) {
-            var precoTotal = snapshot.data["pedidos"][index]["preco_total"];
+            var precoTotal = snapshot.data["pedidos"][index]["preco_cliente"];
             String nome = snapshot.data["pedidos"][index]["nome"];
             String data = snapshot.data["pedidos"][index]["data"];
             var idPedido = snapshot.data["pedidos"][index]["id_pedido"];
@@ -77,6 +77,7 @@ class _HistoricoState extends State<Historico> {
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
+                                  Text("x ${snapshot.data["comidas"][index]["quantidade"]}"),
                                   Text("Total: RS ${snapshot.data["comidas"][index]["preco"]}"),
                                 ],
                               ),

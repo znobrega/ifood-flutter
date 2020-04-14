@@ -43,7 +43,7 @@ class BlocCart extends BlocBase {
   }
 
   void sendPedido(
-      double total, int idRestaurante, int idCliente, String endereco) async {
+      double total, int idRestaurante, int idCliente, String endereco, String tipoEntrega) async {
     CartController cartController = CartController();
     print("========SUBMIT PEDIDO======");
     print("Total: $total");
@@ -57,7 +57,7 @@ class BlocCart extends BlocBase {
     List copy = List.from(items);
 
     try {
-      var res = await cartController.createPedido(idRestaurante, idCliente);
+      var res = await cartController.createPedido(idRestaurante, idCliente, tipoEntrega);
       print("=======================");
       print(res["pedido"]["id"]);
       print("=======================");
@@ -72,19 +72,12 @@ class BlocCart extends BlocBase {
       }
     });
 
-      // List list = await
-      // Future.wait(items.map(
-      //         (item) => cartController.createPedido(idRestaurante, idCliente)))
-      //     .then((value) {
-      //   print(value);
-      //   clearList();
-      // });
-
-      var preco = await cartController.totalPrice(res["pedido"]["id"], total);
+      var preco = await cartController.totalPrice(res["pedido"]["id"], total, tipoEntrega);
       print(preco);
       clearList();
       print("Items originais FINAL: $items");
       print("Items COPIA: $copy");
+      
     } catch (err) {
       print(err);
     }
