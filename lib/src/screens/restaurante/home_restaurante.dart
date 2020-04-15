@@ -51,7 +51,7 @@ class _HomeRestauranteState extends State<HomeRestaurante> {
       ),
       body: [
         Cardapio(usuario: widget.usuario),
-        Relatorio(),
+        Relatorio(idRestaurante: widget.usuario["id"]),
         HistoricoRestaurante(id: widget.usuario["id"])
       ].elementAt(screenIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -66,7 +66,7 @@ class _HomeRestauranteState extends State<HomeRestaurante> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
-            title: Text("Historico"),
+            title: Text("Histórico"),
           ),
         ],
         onTap: onBarTap,

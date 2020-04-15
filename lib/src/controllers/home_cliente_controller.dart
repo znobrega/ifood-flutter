@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ifood_app/src/controllers/restaurante_controller.dart';
 import 'package:ifood_app/src/env/env.dart';
 
 class HomeClienteController {
@@ -70,6 +71,33 @@ class HomeClienteController {
     } catch (e) {
       print(e);
     }
+  }
+   Future restaurantePopularHudson() async {
+    var response = await dio.get("${ENV.BASE_URL}/restaurante/popular");
+    var restaurantes = response.data['restaurantes'];
+    var populares = [];
+    var restauranteController = RestauranteController();
+    bool isPopular = false;
+
+    for(var res in restaurantes)
+    {
+            var cardapio = (await restauranteController.cardapio(res['id']))['cardapio'];
+      for(var comida in cardapio)
+      {
+        if(comida['preco'] <= 10)
+          isPopular = true;
+      }
+
+      if(isPopular)
+      {
+        populares.add(res);
+        isPopular = false;
+      }
+    }
+
+    response.data['restaurantes'] = populares;
+
+    return response.data;
   }
 
 

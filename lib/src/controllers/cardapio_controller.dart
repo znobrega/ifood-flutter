@@ -22,16 +22,24 @@ class CardapioController {
     }
   }
 
-  Future updateFood(int idComida, String nome, String preco, String descricao) async {
+  Future updateFood(int idComida, String nome, String preco, String descricao, dynamic precoAnterior) async {
 
-    double precoDouble = double.parse(preco);
+    double precoNovo = double.parse(preco);
+    double precoAntigo = double.parse(precoAnterior);
+    bool promocao = false;
+
+    if(precoNovo <= precoAntigo*0.5) {
+      promocao = true;
+    }
+
     try {
       var response = await dio.put("${ENV.BASE_URL}/comida/update", 
       data: {
         "id_comida": idComida,
         "nome": nome,
-        "preco": precoDouble,
-        "descricao": descricao
+        "preco": precoNovo,
+        "descricao": descricao,
+        "promocao": promocao
       },);
       print(response.data);
       return response.data;

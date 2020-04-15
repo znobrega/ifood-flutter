@@ -108,12 +108,12 @@ class _HistoricoRestauranteState extends State<HistoricoRestaurante> {
                                           Text(
                                             "${snapshot.data["comidas"][index]["nome"]}",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.w400),
                                           ),
                                           Text(
                                               "x ${snapshot.data["comidas"][index]["quantidade"]}"),
                                           Text(
-                                              "Total: RS ${snapshot.data["comidas"][index]["preco"]}"),
+                                              "Preco Unid.: RS ${snapshot.data["comidas"][index]["preco"]}"),
                                         ],
                                       ),
                                     );

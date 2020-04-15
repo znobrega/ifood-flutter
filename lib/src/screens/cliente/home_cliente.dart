@@ -38,7 +38,7 @@ class _HomeClienteState extends State<HomeCliente> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
-            title: Text("Historico"),
+            title: Text("Histórico"),
           ),
         ],
         onTap: onBarTap,
@@ -97,6 +97,8 @@ class _HomeClienteState extends State<HomeCliente> {
         buildEntregaRapida(homeClienteController, widget.usuario["id"]),
         Text("Restaurantes populares(preco R\$ 10)"),
         buildRestaurantesPopulares(homeClienteController, widget.usuario["id"]),
+        Text("Restaurantes populares(HUDSON)"),
+        buildRestaurantesPopularesHudson(homeClienteController, widget.usuario["id"]),
         Text("Promoções"),
         buildPromocoes(homeClienteController, widget.usuario["id"]),
       ],
@@ -337,6 +339,64 @@ Widget buildEntregaRapida(var homeClienteController, int id) {
 Widget buildRestaurantesPopulares(var homeClienteController, int id) {
   return FutureBuilder(
           future: homeClienteController.restaurantePopular(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return Container(
+                height: 100,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: snapshot.data["restaurantes"].length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.all(5),
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.amberAccent,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Container(),
+                          ),
+                          ListTile(
+                            title: Text(
+                                "${snapshot.data["restaurantes"][index]["nome"]}"),
+                            subtitle: Text(
+                                "${snapshot.data["restaurantes"][index]["tipo_entrega"]}"),
+                            onTap: () {
+                              handleTileTap(
+                                  context,
+                                  snapshot.data["restaurantes"][index]
+                                      ["id"],
+                                  snapshot.data["restaurantes"][index]
+                                      ["nome"],
+                                  id,
+                                  snapshot.data["restaurantes"][index]["tipo_entrega"]);
+                            },
+                          ),
+                          Expanded(
+                            child: Container(),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              );
+            }
+          },
+        );
+}
+
+Widget buildRestaurantesPopularesHudson(var homeClienteController, int id) {
+  return FutureBuilder(
+          future: homeClienteController.restaurantePopularHudson(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return Center(

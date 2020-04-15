@@ -71,7 +71,7 @@ class _LoginState extends State<Login> {
                   onPressed: () {
                     //email.text = "carlos@gmail.com";
                     //email.text = "dominos@gmail.com";
-                    email.text = "emporio@gmail.com";
+                    email.text = "bruno@gmail.com";
                     print(email.text);
                     print(password.text);
                     setState(() {

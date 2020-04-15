@@ -151,7 +151,7 @@ class _AddComidaState extends State<AddComida> {
                       } else {
                         cardapioController
                             .updateFood(widget.idComida, nomeController.text,
-                                precoController.text, descricaoController.text)
+                                precoController.text, descricaoController.text, widget.preco)
                             .then((_) {
                           Navigator.pushReplacement(
                             context,

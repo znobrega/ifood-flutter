@@ -78,7 +78,7 @@ class _HistoricoClienteState extends State<HistoricoCliente> {
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   Text("x ${snapshot.data["comidas"][index]["quantidade"]}"),
-                                  Text("Total: RS ${snapshot.data["comidas"][index]["preco"]}"),
+                                  Text("Preco Unid.: RS ${snapshot.data["comidas"][index]["preco"]}"),
                                 ],
                               ),
                             );
