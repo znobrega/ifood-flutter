@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_app/src/screens/restaurante/add_food.dart';
 import 'package:ifood_app/src/screens/restaurante/cardapio.dart';
-import 'package:ifood_app/src/screens/historico.dart';
+import 'package:ifood_app/src/screens/restaurante/config.dart';
+import 'package:ifood_app/src/screens/restaurante/historico_restaurante.dart';
 import 'package:ifood_app/src/screens/restaurante/relatorio.dart';
 import 'package:ifood_app/src/utils/ColorsIfood.dart';
 
@@ -24,6 +25,7 @@ class _HomeRestauranteState extends State<HomeRestaurante> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.usuario);
     return Scaffold(
       backgroundColor: Color(0xfff5f5f5),
       appBar: AppBar(
@@ -35,8 +37,23 @@ class _HomeRestauranteState extends State<HomeRestaurante> {
             Navigator.pop(context);
           },
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) =>
+                            Configs(title: widget.usuario["nome"])));
+              })
+        ],
       ),
-      body: [Cardapio(usuario: widget.usuario), Relatorio(), Historico()].elementAt(screenIndex),
+      body: [
+        Cardapio(usuario: widget.usuario),
+        Relatorio(),
+        HistoricoRestaurante(id: widget.usuario["id"])
+      ].elementAt(screenIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -57,11 +74,15 @@ class _HomeRestauranteState extends State<HomeRestaurante> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      AddComida(title: "Adicionar comida", idRestaurante: widget.usuario["id"])));
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => AddComida(
+                  title: "Adicionar comida",
+                  idRestaurante: widget.usuario["id"],
+                  usuario: widget.usuario),
+            ),
+          );
         },
         elevation: 2,
         autofocus: false,

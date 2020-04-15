@@ -53,6 +53,15 @@ class HomeClienteController {
       print(e);
     }
   }
+
+  Future historicoPedidosRestaurante(int id) async {
+    try {
+      var response = await dio.get("${ENV.BASE_URL}/pedido/historicorestaurante", queryParameters: {"id_restaurante": id});
+      return response.data;
+    } catch (e) {
+      print(e);
+    }
+  }
   
   Future comidasPedido(int id) async {
     try {

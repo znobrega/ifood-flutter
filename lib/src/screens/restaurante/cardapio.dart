@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_app/src/controllers/cardapio_controller.dart';
 import 'package:ifood_app/src/controllers/restaurante_controller.dart';
+import 'package:ifood_app/src/screens/restaurante/add_food.dart';
+import 'package:ifood_app/src/utils/ColorsIfood.dart';
 
 class Cardapio extends StatefulWidget {
   final Map<String, dynamic> usuario;
@@ -30,6 +32,10 @@ class _CardapioState extends State<Cardapio> {
             child: CircularProgressIndicator(),
           );
         }
+
+        if(snapshot.connectionState == ConnectionState.done) {
+          print("Requisição do cardapio acabou: ${snapshot.data}");
+        }
         return ListView.builder(
           itemCount: snapshot.data["cardapio"].length,
           itemBuilder: (BuildContext context, int index) {
@@ -38,27 +44,49 @@ class _CardapioState extends State<Cardapio> {
             var preco = snapshot.data["cardapio"][index]["preco"];
             //int idComida = snapshot.data["cardapio"][index]["id_comida"];
             return Card(
-              child: ListTile(
-                title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("$comidaNome"),
-                      Text("R\$ $preco"),
-                    ]),
-                subtitle: Text("$descricao"),
-                trailing: Icon(Icons.more_vert),
-                onLongPress: () {
+              child: Dismissible(
+                background: Container(color: ColorsIfood.main),
+                key: UniqueKey(),
+                onDismissed: (direction) {
                   cardapioController
                       .deleteFromCardapio(
                           snapshot.data["cardapio"][index]["id_comida"])
-                      .then((onValue) {
-                    setState(() {});
-                  });
+                      .then(
+                    (onValue) {
+                      setState(() {
+                        snapshot.data["cardapio"].removeAt(index);
+                      });
+                    },
+                  );
                 },
-                onTap: () {
-                  //blocCart.addItem(CartItem(comidaNome, preco, idComida, 1));
-                  print("Adicionar ao pedido");
-                },
+                child: ListTile(
+                  title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("$comidaNome"),
+                        Text("R\$ $preco"),
+                      ]),
+                  subtitle: Text("$descricao"),
+                  trailing: Icon(Icons.more_vert),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => AddComida(
+                          title: "Editar comida",
+                          idRestaurante: widget.usuario["id"],
+                          idComida: snapshot.data["cardapio"][index]["id_comida"],
+                          nome: comidaNome,
+                          descricao: descricao,
+                          preco: preco,
+                          usuario: widget.usuario,
+                        ),
+                      ),
+                    );
+                    print("Testando volta da tela");
+                    print("Testando volta da tela");
+                  },
+                ),
               ),
             );
           },

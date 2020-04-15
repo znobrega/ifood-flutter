@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_app/src/controllers/home_cliente_controller.dart';
 
-class Historico extends StatefulWidget {
+class HistoricoCliente extends StatefulWidget {
   final int id;
-  Historico({Key key, this.id}) : super(key: key);
+  HistoricoCliente({Key key, this.id}) : super(key: key);
 
   @override
-  _HistoricoState createState() => _HistoricoState();
+  _HistoricoClienteState createState() => _HistoricoClienteState();
 }
 
-class _HistoricoState extends State<Historico> {
+class _HistoricoClienteState extends State<HistoricoCliente> {
   HomeClienteController homeClienteController = HomeClienteController();
 
   @override

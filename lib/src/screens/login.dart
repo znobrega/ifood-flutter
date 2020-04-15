@@ -15,6 +15,8 @@ class _LoginState extends State<Login> {
   var email = TextEditingController();
   var password = TextEditingController();
 
+  bool loading = false;
+
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
@@ -67,21 +69,29 @@ class _LoginState extends State<Login> {
                 width: 335,
                 child: RaisedButton(
                   onPressed: () {
-                    email.text = "carlos@gmail.com";
+                    //email.text = "carlos@gmail.com";
                     //email.text = "dominos@gmail.com";
+                    email.text = "emporio@gmail.com";
                     print(email.text);
                     print(password.text);
-
+                    setState(() {
+                      loading = true;
+                    });
                     loginController.handleLogin(email.text, password.text).then(
                       (res) {
+                        loading = false;
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) {
                               if (res["usuario"][0]["provedor"] == false) {
-                                return HomeCliente(usuario: res["usuario"][0],);
+                                return HomeCliente(
+                                  usuario: res["usuario"][0],
+                                );
                               } else {
-                                return HomeRestaurante(usuario: res["usuario"][0]);
+                                return HomeRestaurante(
+                                    usuario: res["usuario"][0]);
                               }
                             },
                           ),
@@ -105,12 +115,14 @@ class _LoginState extends State<Login> {
                   textColor: Colors.white,
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(9.0)),
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
+                  child: loading
+                      ? CircularProgressIndicator()
+                      : Text(
+                          "Login",
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
                 ),
               ),
               SizedBox(height: 60),

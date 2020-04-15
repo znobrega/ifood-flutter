@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ifood_app/src/controllers/home_cliente_controller.dart';
 import 'package:ifood_app/src/screens/cliente/pesquisa.dart';
 import 'package:ifood_app/src/screens/cliente/restaurante_cliente.dart';
-import 'package:ifood_app/src/screens/historico.dart';
+import 'package:ifood_app/src/screens/cliente/historico_cliente.dart';
 
 class HomeCliente extends StatefulWidget {
   final Map<String, dynamic> usuario;
@@ -28,7 +28,7 @@ class _HomeClienteState extends State<HomeCliente> {
         centerTitle: true,
         title: Text("Página inicial"),
       ),
-      body: [body(), Historico(id: widget.usuario["id"])]
+      body: [body(), HistoricoCliente(id: widget.usuario["id"])]
           .elementAt(screenIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_app/src/screens/cliente/home_cliente.dart';
+import 'package:ifood_app/src/controllers/signup_controller.dart';
 
 class Signup extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -31,7 +31,6 @@ Widget tabs(BuildContext context) {
               tabs: <Widget>[
                 Tab(
                   text: 'Usuário',
-
                 ),
                 Tab(
                   text: 'Restaurante',
@@ -56,9 +55,16 @@ Widget tabs(BuildContext context) {
 }
 
 Widget formUsuario(BuildContext context) {
+  var nomeController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var enderecoController = TextEditingController();
+
   return ListView(
     children: <Widget>[
-      SizedBox(height: 20,),
+      SizedBox(
+        height: 20,
+      ),
       Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -69,6 +75,7 @@ Widget formUsuario(BuildContext context) {
               height: 60,
               width: 335,
               child: TextField(
+                controller: nomeController,
                 decoration: InputDecoration(
                   hintText: "Digite seu nome",
                   labelText: 'Nome',
@@ -85,6 +92,7 @@ Widget formUsuario(BuildContext context) {
               height: 60,
               width: 335,
               child: TextField(
+                controller: emailController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: "Digite sua email",
@@ -102,6 +110,7 @@ Widget formUsuario(BuildContext context) {
               height: 60,
               width: 335,
               child: TextField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: "Digite sua senha",
@@ -119,7 +128,7 @@ Widget formUsuario(BuildContext context) {
               height: 60,
               width: 335,
               child: TextField(
-                obscureText: true,
+                controller: enderecoController,
                 decoration: InputDecoration(
                   hintText: "Digite seu endereço",
                   labelText: 'Endereço',
@@ -137,7 +146,15 @@ Widget formUsuario(BuildContext context) {
               width: 335,
               child: RaisedButton(
                 onPressed: () {
-                  //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Devs2()));
+                  SignupController.cliente(
+                      nomeController.text,
+                      emailController.text,
+                      passwordController.text,
+                      enderecoController.text);
+
+                  Navigator.pop(
+                    context,
+                  );
                 },
                 color: Color(0xffDF4723),
                 textColor: Colors.white,
@@ -159,22 +176,18 @@ Widget formUsuario(BuildContext context) {
 }
 
 Widget formRestaurante(BuildContext context) {
+  var nomeController = TextEditingController();
+  var emailController = TextEditingController();
+
+  var passwordController = TextEditingController();
+  var enderecoController = TextEditingController();
+  var categoriaController = TextEditingController();
+
   return ListView(
     children: <Widget>[
-      SizedBox(height: 20,),
-      // Padding(
-      //   padding: EdgeInsets.symmetric(vertical: 20),
-      //   child: Center(
-      //     child: Text(
-      //       "Cadastro",
-      //       style: TextStyle(
-      //         // fontWeight: FontWeight.bold,
-      //         color: Color(0xffDF4723),
-      //         fontSize: 28,
-      //       ),
-      //     ),
-      //   ),
-      // ),
+      SizedBox(
+        height: 20,
+      ),
       Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -265,45 +278,21 @@ Widget formRestaurante(BuildContext context) {
               ),
             ),
             SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.only(left: 15),
-              child: Row(
-                children: [
-                  Text("Tipo entrega: "),
-                  DropdownButton<String>(
-                    hint: Text("Escolha o tipo de entrega"),
-                    value: "Frete grátis",
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      width: 100,
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (String newValue) {},
-                    items: <String>['Frete grátis', 'Entrega rápida']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
             Container(
               height: 60,
               width: 335,
               child: RaisedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => HomeCliente()));
+                  SignupController.restaurante(
+                      nomeController.text,
+                      emailController.text,
+                      passwordController.text,
+                      enderecoController.text,
+                      categoriaController.text);
+
+                  Navigator.pop(
+                    context,
+                  );
                 },
                 color: Color(0xffDF4723),
                 textColor: Colors.white,

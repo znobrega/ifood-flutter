@@ -1,33 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_app/src/controllers/cardapio_controller.dart';
+import 'package:ifood_app/src/screens/restaurante/home_restaurante.dart';
 
 class AddComida extends StatefulWidget {
+  final Map<String, dynamic> usuario;
   final String title;
   final int idRestaurante;
 
+  final int idComida;
   final String nome;
-  final String comida;
-  final double preco;
+  final String descricao;
+  final dynamic preco;
 
   AddComida(
-      {this.title, this.idRestaurante, this.nome, this.comida, this.preco});
+      {this.title,
+      this.idRestaurante,
+      this.idComida,
+      this.nome,
+      this.descricao,
+      this.preco,
+      this.usuario});
 
   @override
   _AddComidaState createState() => _AddComidaState();
 }
 
 class _AddComidaState extends State<AddComida> {
-  @override
-  void initState() {
-    // bloc.getAddComida(idTurma: widget.idTurma);
-    super.initState();
-  }
-
   CardapioController cardapioController = CardapioController();
-
   TextEditingController nomeController = TextEditingController();
   TextEditingController descricaoController = TextEditingController();
   TextEditingController precoController = TextEditingController();
+
+  @override
+  void initState() {
+    cardapioController = CardapioController();
+    nomeController = TextEditingController();
+    descricaoController = TextEditingController();
+    precoController = TextEditingController();
+
+    if (widget.idComida != null &&
+        widget.nome != null &&
+        widget.descricao != null) {
+      nomeController.text = widget.nome;
+      descricaoController.text = widget.descricao;
+      precoController.text = widget.preco.toString();
+    }
+    // bloc.getAddComida(idTurma: widget.idTurma);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +58,13 @@ class _AddComidaState extends State<AddComida> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    HomeRestaurante(usuario: widget.usuario),
+              ),
+            );
           },
         ),
       ),
@@ -109,12 +135,33 @@ class _AddComidaState extends State<AddComida> {
                   width: 335,
                   child: RaisedButton(
                     onPressed: () {
-                      cardapioController.addFood(
-                          widget.idRestaurante,
-                          nomeController.text,
-                          precoController.text,
-                          descricaoController.text);
-                      Navigator.pop(context);
+                      if (widget.idComida == null) {
+                        cardapioController
+                            .addFood(widget.idRestaurante, nomeController.text,
+                                precoController.text, descricaoController.text)
+                            .then((_) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  HomeRestaurante(usuario: widget.usuario),
+                            ),
+                          );
+                        });
+                      } else {
+                        cardapioController
+                            .updateFood(widget.idComida, nomeController.text,
+                                precoController.text, descricaoController.text)
+                            .then((_) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  HomeRestaurante(usuario: widget.usuario),
+                            ),
+                          );
+                        });
+                      }
                     },
                     color: Color(0xffDF4723),
                     textColor: Colors.white,
