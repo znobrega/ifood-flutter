@@ -4,7 +4,8 @@ import 'package:ifood_app/src/screens/cliente/restaurante_cliente.dart';
 
 class Search extends StatefulWidget {
   final String search;
-  Search({Key key, this.search}) : super(key: key);
+  final int idCliente;
+  Search({Key key, this.search, this.idCliente}) : super(key: key);
 
   @override
   _SearchState createState() => _SearchState();
@@ -51,7 +52,7 @@ class _SearchState extends State<Search> {
                         MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 RestauranteCliente(idRestaurante: snapshot.data["comidas"][index]["id_restaurante"],
-                                 nomeRestaurante: snapshot.data["comidas"][index]["nome"])));
+                                 nomeRestaurante: snapshot.data["comidas"][index]["nome"], idCliente: widget.idCliente,)));
                   },
                 ),
               );

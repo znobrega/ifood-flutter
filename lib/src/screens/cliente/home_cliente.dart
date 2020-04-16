@@ -65,7 +65,7 @@ class _HomeClienteState extends State<HomeCliente> {
               suffixIcon: IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {
-                  handleSearch(context, searchInputController.text);
+                  handleSearch(context, searchInputController.text, widget.usuario["id"]);
                 },
               ),
               hintText: "Pesquise por palavra-chave",
@@ -197,7 +197,7 @@ Widget buildPromocoes(var homeClienteController, int id) {
                         handleTileTap(
                             context,
                             snapshot.data["comidas"][index]["id_restaurante"],
-                            snapshot.data["comidas"][index]["nomerestaurante"],
+                            snapshot.data["comidas"][index]["nome_restaurante"],
                             id,
                             snapshot.data["comidas"][index]["tipo_entrega"]);
                       },
@@ -506,11 +506,11 @@ Widget buildRestaurantesPopularesMoura(var homeClienteController, int id) {
         );
 }
 
-void handleSearch(BuildContext context, String search) {
+void handleSearch(BuildContext context, String search, int idCliente) {
   Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (BuildContext context) => Search(search: search)));
+          builder: (BuildContext context) => Search(search: search, idCliente: idCliente)));
 }
 
 void handleTileTap(BuildContext context, int idRestaurante,
