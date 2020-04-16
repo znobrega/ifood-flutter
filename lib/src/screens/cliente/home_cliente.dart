@@ -190,9 +190,9 @@ Widget buildPromocoes(var homeClienteController, int id) {
                       child: Container(),
                     ),
                     ListTile(
-                      title: Text("${snapshot.data["comidas"][index]["nome"]}"),
+                      title: Text("${snapshot.data["comidas"][index]["nome_comida"]}"),
                       subtitle: Text(
-                          "${snapshot.data["comidas"][index]["nomerestaurante"]}"),
+                          "${snapshot.data["comidas"][index]["nome_restaurante"]}"),
                       onTap: () {
                         handleTileTap(
                             context,
