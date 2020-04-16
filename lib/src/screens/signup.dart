@@ -93,7 +93,6 @@ Widget formUsuario(BuildContext context) {
               width: 335,
               child: TextField(
                 controller: emailController,
-                obscureText: true,
                 decoration: InputDecoration(
                   hintText: "Digite sua email",
                   labelText: 'Email',
@@ -147,14 +146,15 @@ Widget formUsuario(BuildContext context) {
               child: RaisedButton(
                 onPressed: () {
                   SignupController.cliente(
-                      nomeController.text,
-                      emailController.text,
-                      passwordController.text,
-                      enderecoController.text);
-
-                  Navigator.pop(
-                    context,
-                  );
+                          nomeController.text,
+                          emailController.text,
+                          passwordController.text,
+                          enderecoController.text)
+                      .then((_) {
+                    Navigator.pop(
+                      context,
+                    );
+                  });
                 },
                 color: Color(0xffDF4723),
                 textColor: Colors.white,
@@ -189,7 +189,7 @@ Widget formRestaurante(BuildContext context) {
         height: 20,
       ),
       Container(
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height + 100,
         width: MediaQuery.of(context).size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -198,6 +198,7 @@ Widget formRestaurante(BuildContext context) {
               height: 60,
               width: 335,
               child: TextField(
+                controller: nomeController,
                 decoration: InputDecoration(
                   hintText: "Digite seu nome",
                   labelText: 'Nome',
@@ -214,7 +215,7 @@ Widget formRestaurante(BuildContext context) {
               height: 60,
               width: 335,
               child: TextField(
-                obscureText: true,
+                controller: emailController,
                 decoration: InputDecoration(
                   hintText: "Digite sua email",
                   labelText: 'Email',
@@ -231,6 +232,7 @@ Widget formRestaurante(BuildContext context) {
               height: 60,
               width: 335,
               child: TextField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: "Digite sua senha",
@@ -248,7 +250,7 @@ Widget formRestaurante(BuildContext context) {
               height: 60,
               width: 335,
               child: TextField(
-                obscureText: true,
+                controller: enderecoController,
                 decoration: InputDecoration(
                   hintText: "Digite seu endereço",
                   labelText: 'Endereço',
@@ -265,7 +267,7 @@ Widget formRestaurante(BuildContext context) {
               height: 60,
               width: 335,
               child: TextField(
-                obscureText: true,
+                controller: categoriaController,
                 decoration: InputDecoration(
                   hintText: "Digite sua categoria",
                   labelText: 'Categoria',
@@ -284,15 +286,16 @@ Widget formRestaurante(BuildContext context) {
               child: RaisedButton(
                 onPressed: () {
                   SignupController.restaurante(
-                      nomeController.text,
-                      emailController.text,
-                      passwordController.text,
-                      enderecoController.text,
-                      categoriaController.text);
-
-                  Navigator.pop(
-                    context,
-                  );
+                          nomeController.text,
+                          emailController.text,
+                          passwordController.text,
+                          enderecoController.text,
+                          categoriaController.text)
+                      .then((_) {
+                    Navigator.pop(
+                      context,
+                    );
+                  });
                 },
                 color: Color(0xffDF4723),
                 textColor: Colors.white,
@@ -306,7 +309,7 @@ Widget formRestaurante(BuildContext context) {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 100),
           ],
         ),
       ),

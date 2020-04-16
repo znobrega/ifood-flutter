@@ -23,6 +23,10 @@ class _RelatorioState extends State<Relatorio> {
                  return Center(child: CircularProgressIndicator());
                }
 
+               if (snapshot.data["comida"].length == 0) {
+                 return Text("Ainda não pediram comida em seu restaurante");
+               }
+
                return Row(
                  children: <Widget>[
                    Text("Comida mais popular: ${snapshot.data["comida"][0]["nome"]}"),

@@ -33,11 +33,16 @@ class _CardapioState extends State<Cardapio> {
           );
         }
 
+        if(snapshot.data["cardapio"].length == 0) {
+          return Center(child: Text("Adicione comidas no cardápio!"));
+        }
+
         if(snapshot.connectionState == ConnectionState.done) {
           print("Requisição do cardapio acabou: ${snapshot.data}");
         }
         return ListView.builder(
           itemCount: snapshot.data["cardapio"].length,
+
           itemBuilder: (BuildContext context, int index) {
             String comidaNome = snapshot.data["cardapio"][index]["comida_nome"];
             String descricao = snapshot.data["cardapio"][index]["descricao"];

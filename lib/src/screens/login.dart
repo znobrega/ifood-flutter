@@ -71,7 +71,7 @@ class _LoginState extends State<Login> {
                   onPressed: () {
                     //email.text = "carlos@gmail.com";
                     //email.text = "dominos@gmail.com";
-                    email.text = "bruno@gmail.com";
+                    //email.text = "bruno@gmail.com";
                     print(email.text);
                     print(password.text);
                     setState(() {
@@ -80,6 +80,7 @@ class _LoginState extends State<Login> {
                     loginController.handleLogin(email.text, password.text).then(
                       (res) {
                         loading = false;
+                        print(res);
 
                         Navigator.push(
                           context,
@@ -98,18 +99,6 @@ class _LoginState extends State<Login> {
                         );
                       },
                     );
-
-                    //  _facade.submitLogin(email.text, password.text)
-                    //           .then((valid){
-                    //             if(!valid){
-                    //               showDialog(context: context, builder: (context) {
-                    //                 CloseButton button = CloseButton(key: Key('X'));
-
-                    //                 return AlertDialog(title: Text('Erro'),
-                    //                                    content: Text('Usuário ou senha incorretos'),
-                    //                                    actions: <Widget>[button] );
-                    //               });
-                    //             }
                   },
                   color: Color(0xffDF4723),
                   textColor: Colors.white,
