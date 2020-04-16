@@ -32,7 +32,6 @@ class _HistoricoRestauranteState extends State<HistoricoRestaurante> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.id);
     return FutureBuilder(
       future: homeClienteController.historicoPedidosRestaurante(widget.id),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -44,8 +43,6 @@ class _HistoricoRestauranteState extends State<HistoricoRestaurante> {
         if (snapshot.data["pedidos"].length == 0) {
           return Center(child: Text("Sem pedidos"));
         }
-        print("HISTORICO PEDIDO:");
-        print(snapshot.data);
         return ListView(children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -124,8 +121,6 @@ class _HistoricoRestauranteState extends State<HistoricoRestaurante> {
                                   );
                                 }
 
-                                print("comidas do pedido: id : $idPedido");
-                                print(snapshot.data);
 
                                 return Container(
                                   height: snapshot.data["comidas"].length * 58.1,

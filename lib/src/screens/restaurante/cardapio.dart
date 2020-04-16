@@ -38,7 +38,6 @@ class _CardapioState extends State<Cardapio> {
         }
 
         if(snapshot.connectionState == ConnectionState.done) {
-          print("Requisição do cardapio acabou: ${snapshot.data}");
         }
         return ListView.builder(
           itemCount: snapshot.data["cardapio"].length,
@@ -88,8 +87,6 @@ class _CardapioState extends State<Cardapio> {
                         ),
                       ),
                     );
-                    print("Testando volta da tela");
-                    print("Testando volta da tela");
                   },
                 ),
               ),

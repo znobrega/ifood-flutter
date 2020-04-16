@@ -22,9 +22,9 @@ class CardapioController {
   }
 
   Future updateFood(int idComida, String nome, String preco, String descricao, dynamic precoAnterior) async {
-
+    print(precoAnterior.runtimeType);
     double precoNovo = double.parse(preco);
-    double precoAntigo = double.parse(precoAnterior);
+    double precoAntigo = double.parse(precoAnterior.toString());
     bool promocao = false;
 
     if(precoNovo <= precoAntigo*0.5) {

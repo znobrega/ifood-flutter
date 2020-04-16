@@ -75,7 +75,6 @@ class _LoginState extends State<Login> {
                     loginController.handleLogin(email.text, password.text).then(
                       (res) {
                         loading = false;
-                        print(res);
 
                         Navigator.push(
                           context,

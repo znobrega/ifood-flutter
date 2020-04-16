@@ -18,7 +18,6 @@ class _RelatorioState extends State<Relatorio> {
     return Container(
       height: MediaQuery.of(context).size.height,
       child: ListView(
-
         children: [
           Container(
             child: FutureBuilder(
@@ -49,7 +48,6 @@ class _RelatorioState extends State<Relatorio> {
             ),
           ),
           SizedBox(height: 30),
-          Text("Médias dos ultimos 7 dias", style: TextStyles.styleBold,),
           Container(
             height: 1000,
             child: FutureBuilder(
@@ -58,13 +56,23 @@ class _RelatorioState extends State<Relatorio> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 }
+
                 return ListView.builder(
-                  itemCount: snapshot.data["comidas"].length,
+                  itemCount: snapshot.data["comidas"].length + 1,
                   itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Text(
+                        "Médias dos ultimos 7 dias",
+                        style: TextStyles.styleBold,
+                      );
+                    }
+
                     return Card(
                       child: ListTile(
-                        title: Text("${snapshot.data["comidas"][index]["nome"]}"),
-                        subtitle: Text("Preço médio: R\$ ${snapshot.data["comidas"][index]["media"]}"),
+                        title: Text(
+                            "${snapshot.data["comidas"][index - 1]["nome"]}"),
+                        subtitle: Text(
+                            "Preço médio: R\$ ${snapshot.data["comidas"][index - 1]["media"]}"),
                       ),
                     );
                   },

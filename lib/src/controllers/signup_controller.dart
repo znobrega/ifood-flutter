@@ -17,9 +17,6 @@ class SignupController {
         "provedor": true
       };
 
-      print(data);
-
-
     try {
       var response = await dio.post("${ENV.BASE_URL}/restaurante/criar", data:data);
       return response.data;

@@ -28,7 +28,6 @@ class _SubmitPedidoState extends State<SubmitPedido> {
 
   @override
   Widget build(BuildContext context) {
-    print(" tipo entrega ${widget.tipoEntrega}");
     return Scaffold(
       appBar: AppBar(
         title: Text("Finalizar pedido"),
