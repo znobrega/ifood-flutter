@@ -50,7 +50,7 @@ class BlocCart extends BlocBase {
       copy.forEach((item) async {
       try {
         var newfood = await cartController.insertFood(
-            res["pedido"]["id"], item.id, item.amount);
+            res["pedido"]["id"], item.id, item.amount, item.price);
         print("novacomida: $newfood");
       } catch (err) {
         print(err);

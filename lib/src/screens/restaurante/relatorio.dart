@@ -36,13 +36,42 @@ class _RelatorioState extends State<Relatorio> {
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Comida mais popular:", style: TextStyles.styleBold),
+                      Text("Comida mais popular por QUANTIDADE:", style: TextStyles.styleBold),
                       Text("${snapshot.data["comida"][0]["nome"]}",
-                          style: TextStyles.styleBold),
+                          style: TextStyle(fontStyle: FontStyle.italic)),
                     ],
                   ),
                   subtitle: Text(
                       "Vezes pedida: ${snapshot.data["comida"][0]["quantidade_pedida"]}"),
+                );
+              },
+            ),
+          ),
+          Container(
+            child: FutureBuilder(
+              future:
+                  restauranteController.comidaMaisPedidaPedido(widget.idRestaurante),
+              builder: (context, snapshot) {
+                print(snapshot.data);
+                if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
+                  return Container();
+                }
+
+                if (snapshot.data["comida"].length == 0) {
+                  return Container();
+                }
+
+                return ListTile(
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("Comida mais popular por PEDIDO:", style: TextStyles.styleBold),
+                      Text("${snapshot.data["comida"][0]["nome"]}",
+                          style: TextStyle(fontStyle: FontStyle.italic)),
+                    ],
+                  ),
+                  subtitle: Text(
+                      "Vezes pedida: ${snapshot.data["comida"][0]["vezes_pedida"]}"),
                 );
               },
             ),
@@ -61,6 +90,10 @@ class _RelatorioState extends State<Relatorio> {
                   itemCount: snapshot.data["comidas"].length + 1,
                   itemBuilder: (context, index) {
                     if (index == 0) {
+                      if(snapshot.data["comidas"].length == 0) {
+                        return Container();
+                      }
+
                       return Text(
                         "Médias dos ultimos 7 dias",
                         style: TextStyles.styleBold,

@@ -32,13 +32,14 @@ class CartController {
     }
   }
 
-  Future insertFood(idPedido, idComida, quantidade) async {
+  Future insertFood(idPedido, idComida, quantidade, preco_comida) async {
     try {
       var response = await dio.post("${ENV.BASE_URL}/detalhes_pedido/inserircomida", 
       data: {
         "id_pedido": idPedido,
         "id_comida": idComida,
-        "quantidade": quantidade,
+        "preco": preco_comida,
+        "quantidade": quantidade
       });
       return response.data;
     } catch (e) {

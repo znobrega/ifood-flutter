@@ -34,6 +34,16 @@ class RestauranteController {
       print(e);
     }
   }
+  Future comidaMaisPedidaPedido(int idRestaurante) async {
+    try {
+      var response = await dio.get(
+          "${ENV.BASE_URL}/restaurante/comidamaispedidapedido",
+          queryParameters: {"id_restaurante": idRestaurante});
+      return response.data;
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future precoMedio(int idRestaurante) async {
     try {
