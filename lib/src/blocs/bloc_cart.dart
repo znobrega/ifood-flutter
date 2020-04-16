@@ -17,9 +17,6 @@ class BlocCart extends BlocBase {
     } else {
       var result =
           items.firstWhere((item) => item.id == newItem.id, orElse: () => null);
-      int i = items.indexOf(result);
-      print("Resultado da busta: $i");
-      print(result);
 
       if (result != null) {
         result.incrementAmount();
@@ -45,22 +42,10 @@ class BlocCart extends BlocBase {
   void sendPedido(
       double total, int idRestaurante, int idCliente, String endereco, String tipoEntrega) async {
     CartController cartController = CartController();
-    print("========SUBMIT PEDIDO======");
-    print("Total: $total");
-    print("restaurante: $idRestaurante");
-    print("cliente: $idCliente");
-    print("endereco: $idCliente");
-    print("Items originais: $items");
-    print("Items originais: $items");
-    print("--==========================--");
-
     List copy = List.from(items);
 
     try {
       var res = await cartController.createPedido(idRestaurante, idCliente, tipoEntrega);
-      print("=======================");
-      print(res["pedido"]["id"]);
-      print("=======================");
 
       copy.forEach((item) async {
       try {

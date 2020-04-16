@@ -14,7 +14,6 @@ class HomeClienteController {
       print(e);
     }
   }
-  
 
   Future entregaGratis() async {
     var response = await dio.get("${ENV.BASE_URL}/restaurante/entregagratis");
@@ -42,13 +41,16 @@ class HomeClienteController {
   }
 
   Future search(String search) async {
-    var response = await dio.post("${ENV.BASE_URL}/comida/encontrarcomidapornome", data: {"nome_comida": search});
+    var response = await dio.post(
+        "${ENV.BASE_URL}/comida/encontrarcomidapornome",
+        data: {"nome_comida": search});
     return response.data;
   }
 
   Future historicoPedidos(int id) async {
     try {
-      var response = await dio.get("${ENV.BASE_URL}/pedido/historicocliente", queryParameters: {"id_cliente": id});
+      var response = await dio.get("${ENV.BASE_URL}/pedido/historicocliente",
+          queryParameters: {"id_cliente": id});
       return response.data;
     } catch (e) {
       print(e);
@@ -57,48 +59,59 @@ class HomeClienteController {
 
   Future historicoPedidosRestaurante(int id) async {
     try {
-      var response = await dio.get("${ENV.BASE_URL}/pedido/historicorestaurante", queryParameters: {"id_restaurante": id});
+      var response = await dio.get(
+          "${ENV.BASE_URL}/pedido/historicorestaurante",
+          queryParameters: {"id_restaurante": id});
       return response.data;
     } catch (e) {
       print(e);
     }
   }
-  
+
+  Future restaurantePopularMoura() async {
+    try {
+      var response = await dio.get(
+          "${ENV.BASE_URL}/restaurante/populares");
+
+      return response.data;
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future comidasPedido(int id) async {
     try {
-      var response = await dio.get("${ENV.BASE_URL}/pedido/comidas", queryParameters: {"id_pedido": id});
+      var response = await dio.get("${ENV.BASE_URL}/pedido/comidas",
+          queryParameters: {"id_pedido": id});
       return response.data;
     } catch (e) {
       print(e);
     }
   }
-   Future restaurantePopularHudson() async {
+
+  Future restaurantePopularHudson() async {
     var response = await dio.get("${ENV.BASE_URL}/restaurante/popular");
     var restaurantes = response.data['restaurantes'];
     var populares = [];
     var restauranteController = RestauranteController();
-    bool isPopular = false;
+    bool isPopular = true;
 
-    for(var res in restaurantes)
-    {
-            var cardapio = (await restauranteController.cardapio(res['id']))['cardapio'];
-      for(var comida in cardapio)
-      {
-        if(comida['preco'] <= 10)
-          isPopular = true;
+    for (var res in restaurantes) {
+      isPopular = true;
+      var cardapio =
+          (await restauranteController.cardapio(res['id']))['cardapio'];
+      for (var comida in cardapio) {
+        if (comida['preco'] > 10) {
+          isPopular = false;
+          break;
+        }
       }
 
-      if(isPopular)
-      {
-        populares.add(res);
-        isPopular = false;
-      }
+      if (isPopular) populares.add(res);
     }
 
     response.data['restaurantes'] = populares;
 
     return response.data;
   }
-
-
 }

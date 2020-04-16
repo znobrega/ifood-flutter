@@ -60,6 +60,8 @@ Widget formUsuario(BuildContext context) {
   var passwordController = TextEditingController();
   var enderecoController = TextEditingController();
 
+  nomeController.text = "text";
+
   return ListView(
     children: <Widget>[
       SizedBox(

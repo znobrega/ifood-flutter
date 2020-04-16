@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_app/src/controllers/home_cliente_controller.dart';
+import 'package:ifood_app/src/utils/TextStyles.dart';
 
 class HistoricoRestaurante extends StatefulWidget {
   final int id;
@@ -13,6 +14,7 @@ class _HistoricoRestauranteState extends State<HistoricoRestaurante> {
   HomeClienteController homeClienteController = HomeClienteController();
 
   dynamic ganhoTotal;
+  int dropdownValue = 7;
 
   @override
   void initState() {
@@ -45,7 +47,35 @@ class _HistoricoRestauranteState extends State<HistoricoRestaurante> {
         print("HISTORICO PEDIDO:");
         print(snapshot.data);
         return ListView(children: [
-          Text("Lucro total: $ganhoTotal"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+          Text("Lucro total: R\$ $ganhoTotal", style: TextStyles.styleBold,),
+            DropdownButton<String>(
+                value: "$dropdownValue dias",
+                icon: Icon(Icons.arrow_drop_down),
+                iconSize: 24,
+                elevation: 16,
+                style: TextStyle(color: Colors.deepPurple),
+                underline: Container(
+                  width: 100,
+                  height: 2,
+                  color: Colors.deepPurpleAccent,
+                ),
+                onChanged: (String newValue) {
+                  setState(() {
+                    dropdownValue = int.parse(newValue.split(" ")[0]);
+                  });
+                },
+                items: <String>['7 dias', '15 dias', '30 dias']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+          ],),
           Container(
             height: snapshot.data["pedidos"].length * 300.1,
             child: ListView.builder(
@@ -65,70 +95,69 @@ class _HistoricoRestauranteState extends State<HistoricoRestaurante> {
                   // }
 
                 return Center(
-                  child: Column(
-                    children: <Widget>[
-                      ExpansionTile(
-                        title: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                "$nome",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text("Total: RS $precoTotal"),
-                            ],
-                          ),
-                          subtitle: Text("$data"),
-                        ),
-                        children: <Widget>[
-                          FutureBuilder(
-                            future:
-                                homeClienteController.comidasPedido(idPedido),
-                            builder: (context, snapshot) {
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-
-                              print("comidas do pedido: id : $idPedido");
-                              print(snapshot.data);
-
-                              return Container(
-                                height: snapshot.data["comidas"].length * 58.1,
-                                child: ListView.builder(
-                                  itemCount: snapshot.data["comidas"].length,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      title: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Text(
-                                            "${snapshot.data["comidas"][index]["nome"]}",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                          Text(
-                                              "x ${snapshot.data["comidas"][index]["quantidade"]}"),
-                                          Text(
-                                              "Preco Unid.: RS ${snapshot.data["comidas"][index]["preco"]}"),
-                                        ],
-                                      ),
-                                    );
-                                  },
+                  child: Card(
+                    elevation: 2,
+                    child: Column(
+                      children: <Widget>[
+                        ExpansionTile(
+                          title: ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "$nome",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                      Divider(
-                        height: 1.0,
-                        color: Colors.black,
-                      ),
-                    ],
+                                Text("Total: RS $precoTotal"),
+                              ],
+                            ),
+                            subtitle: Text("$data"),
+                          ),
+                          children: <Widget>[
+                            FutureBuilder(
+                              future:
+                                  homeClienteController.comidasPedido(idPedido),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+
+                                print("comidas do pedido: id : $idPedido");
+                                print(snapshot.data);
+
+                                return Container(
+                                  height: snapshot.data["comidas"].length * 58.1,
+                                  child: ListView.builder(
+                                    itemCount: snapshot.data["comidas"].length,
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        title: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Text(
+                                              "${snapshot.data["comidas"][index]["nome"]}",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            Text(
+                                                "x ${snapshot.data["comidas"][index]["quantidade"]}"),
+                                            Text(
+                                                "Preco Unid.: RS ${snapshot.data["comidas"][index]["preco"]}"),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

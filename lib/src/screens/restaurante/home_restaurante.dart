@@ -39,14 +39,21 @@ class _HomeRestauranteState extends State<HomeRestaurante> {
         ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) =>
-                            Configs(title: widget.usuario["nome"])));
-              })
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => Configs(
+                    title: widget.usuario["nome"],
+                    idRestaurante: widget.usuario["id"],
+                    tipoEntrega: widget.usuario["tipo_entrega"],
+                    usuario: widget.usuario,
+                  ),
+                ),
+              );
+            },
+          )
         ],
       ),
       body: [

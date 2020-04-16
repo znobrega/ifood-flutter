@@ -23,7 +23,6 @@ class _RestauranteClienteState extends State<RestauranteCliente> {
   @override
   void initState() {
     // bloc.getRestauranteCliente(idTurma: widget.idTurma);
-    print("Restaurante na vidso do cliente");
     super.initState();
   }
 
@@ -71,7 +70,6 @@ class _RestauranteClienteState extends State<RestauranteCliente> {
                 trailing: Icon(Icons.add_shopping_cart),
                 onTap: () {
                   blocCart.addItem(CartItem(comidaNome, preco, idComida, 1));
-                  print("Adicionar ao pedido");
                 },
               ),
             );

@@ -22,7 +22,6 @@ class _CartState extends State<Cart> {
   @override
   void initState() {
     // bloc.getCart(idTurma: widget.idTurma);
-    print("Restaurante na vidso do cliente");
     super.initState();
   }
 
@@ -46,10 +45,8 @@ class _CartState extends State<Cart> {
         if (!snapshot.hasData ||
             snapshot.data == null ||
             snapshot.data?.length == 0) {
-          print("${snapshot.data}");
           return Center(child: Text("Carrinho vazio"));
         } else {
-          print("${snapshot.data}");
           return Column(
             children: [
               Flexible(
@@ -87,7 +84,6 @@ class _CartState extends State<Cart> {
                                       setState(() {
                                         blocCart.decrementAmount(index);
                                       });
-                                      print("decrementar");
                                     }),
                                 Text("${snapshot.data[index].amount}"),
                                 IconButton(
@@ -96,7 +92,6 @@ class _CartState extends State<Cart> {
                                     setState(() {
                                       snapshot.data[index]..incrementAmount();
                                     });
-                                    print("incrementar");
                                   },
                                 ),
                               ],

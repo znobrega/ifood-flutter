@@ -23,7 +23,6 @@ class _SearchState extends State<Search> {
         future: homeClienteController.search(widget.search),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
 
-          print("Comidas:");
           if (!snapshot.hasData || snapshot.hasError || snapshot.data == null) {
             return Center(
               child: CircularProgressIndicator(),

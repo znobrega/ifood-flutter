@@ -15,7 +15,6 @@ class CardapioController {
         "preco": precoDouble,
         "descricao": descricao
       },);
-      print(response.data);
       return response.data;
     } catch (e) {
       print(e);
@@ -41,7 +40,6 @@ class CardapioController {
         "descricao": descricao,
         "promocao": promocao
       },);
-      print(response.data);
       return response.data;
     } catch (e) {
       print(e);
@@ -54,7 +52,6 @@ class CardapioController {
       data: {
         "id_comida": idComida,
       },);
-      print(response.data);
       return response.data;
     } catch (e) {
       print(e);
