@@ -3,6 +3,7 @@ import 'package:ifood_app/src/controllers/login_controller.dart';
 import 'package:ifood_app/src/screens/cliente/home_cliente.dart';
 import 'package:ifood_app/src/screens/restaurante/home_restaurante.dart';
 import 'package:ifood_app/src/screens/signup.dart';
+import 'package:ifood_app/src/screens/alert_dialog.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -78,21 +79,30 @@ class _LoginState extends State<Login> {
                         email.text = "";
                         password.text = "";
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              if (res["usuario"][0]["provedor"] == false) {
-                                return HomeCliente(
-                                  usuario: res["usuario"][0],
-                                );
-                              } else {
-                                return HomeRestaurante(
-                                    usuario: res["usuario"][0]);
-                              }
-                            },
-                          ),
-                        );
+                        if(res["usuario"].isEmpty)
+                          showInfoDialog(
+                              context,
+                              "Erro",
+                              "Não foi possível fazer login. Email e/ou senha incorreto(s).",
+                              "Entendi",
+                            );
+                        
+                        else
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                if (res["usuario"][0]["provedor"] == false) {
+                                  return HomeCliente(
+                                    usuario: res["usuario"][0],
+                                  );
+                                } else {
+                                  return HomeRestaurante(
+                                      usuario: res["usuario"][0]);
+                                }
+                              },
+                            ),
+                          );
                       },
                     );
                   },
