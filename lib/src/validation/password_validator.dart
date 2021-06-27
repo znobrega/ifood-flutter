@@ -2,7 +2,7 @@ import 'dart:core';
 
 class PasswordValidator {
 
-  static final RegExp re = RegExp(r'[A-Za-z_]*\d+[A-Za-z_]*\d+[A-Za-z0-9_]*');
+  static final RegExp re = RegExp(r'^[A-Za-z_]*\d+[A-Za-z_]*\d+[A-Za-z0-9_]*$');
 
   static bool validate(String password) {
     
