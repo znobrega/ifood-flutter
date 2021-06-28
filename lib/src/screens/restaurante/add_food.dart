@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_app/src/controllers/cardapio_controller.dart';
 import 'package:ifood_app/src/screens/restaurante/home_restaurante.dart';
+import 'package:ifood_app/src/screens/alert_dialog.dart';
 
 class AddComida extends StatefulWidget {
   final Map<String, dynamic> usuario;
@@ -139,27 +140,47 @@ class _AddComidaState extends State<AddComida> {
                         cardapioController
                             .addFood(widget.idRestaurante, nomeController.text,
                                 precoController.text, descricaoController.text)
-                            .then((_) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  HomeRestaurante(usuario: widget.usuario),
-                            ),
-                          );
+                            .then((res) {
+                          
+                          if(res["comida"].isEmpty)
+                            showInfoDialog(
+                              context,
+                              "Erro",
+                              res["erro"],
+                              "Entendi",
+                            );
+                          
+                          else                          
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HomeRestaurante(usuario: widget.usuario),
+                              ),
+                            );
                         });
                       } else {
                         cardapioController
                             .updateFood(widget.idComida, nomeController.text,
                                 precoController.text, descricaoController.text, widget.preco)
-                            .then((_) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  HomeRestaurante(usuario: widget.usuario),
-                            ),
-                          );
+                            .then((res) {
+                          
+                          if(res["comida"].isEmpty)
+                            showInfoDialog(
+                              context,
+                              "Erro",
+                              res["erro"],
+                              "Entendi",
+                            );
+                          
+                          else                          
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HomeRestaurante(usuario: widget.usuario),
+                              ),
+                            );
                         });
                       }
                     },
