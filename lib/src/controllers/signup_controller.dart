@@ -11,19 +11,19 @@ class SignupController {
       String endereco, String categoria) async {
     
     if(!NameValidator.validate(nome))
-      return {"usuario":[], "erro": "Nome inválido."};
+      return {"error": "Nome inválido."};
     
     if(!EmailValidator.validate(email))
-      return {"usuario":[], "erro": "Email inválido."};
+      return {"error": "Email inválido."};
 
     if(!PasswordValidator.validate(password))
-      return {"usuario":[], "erro": "Senha inválida."};
+      return {"error": "Senha inválida."};
 
     if(!AddressValidator.validate(endereco))
-      return {"usuario":[], "erro": "Endereço inválido."};
+      return {"error": "Endereço inválido."};
 
     if(!NameValidator.validate(categoria))
-      return {"usuario":[], "erro": "Categoria inválida."};
+      return {"error": "Categoria inválida."};
     
     Dio dio = Dio();
 
@@ -46,16 +46,16 @@ class SignupController {
       String nome, String email, String password, String endereco) async {
     
     if(!NameValidator.validate(nome))
-      return {"usuario":[], "erro": "Nome inválido."};
+      return {"error": "Nome inválido."};
     
     if(!EmailValidator.validate(email))
-      return {"usuario":[], "erro": "Email inválido."};
+      return {"error": "Email inválido."};
 
     if(!PasswordValidator.validate(password))
-      return {"usuario":[], "erro": "Senha inválida."};
+      return {"error": "Senha inválida."};
 
     if(!AddressValidator.validate(endereco))
-      return {"usuario":[], "erro": "Endereço inválido."};
+      return {"error": "Endereço inválido."};
     
     Dio dio = Dio();
     try {
