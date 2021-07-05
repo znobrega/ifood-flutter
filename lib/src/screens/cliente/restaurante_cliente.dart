@@ -4,6 +4,7 @@ import 'package:ifood_app/src/blocs/bloc_cart.dart';
 import 'package:ifood_app/src/controllers/restaurante_controller.dart';
 import 'package:ifood_app/src/models/cart_item.dart';
 import 'package:ifood_app/src/screens/cliente/cart.dart';
+import 'package:ifood_app/src/screens/alert_dialog.dart';
 
 class RestauranteCliente extends StatefulWidget {
   final int idRestaurante;
@@ -58,6 +59,7 @@ class _RestauranteClienteState extends State<RestauranteCliente> {
             String descricao = snapshot.data["cardapio"][index]["descricao"];
             var preco = snapshot.data["cardapio"][index]["preco"];
             int idComida = snapshot.data["cardapio"][index]["id_comida"];
+            int idRestaurante = snapshot.data["cardapio"][index]["id_restaurante"];
             return Card(
               child: ListTile(
                 title: Column(
@@ -69,7 +71,16 @@ class _RestauranteClienteState extends State<RestauranteCliente> {
                 subtitle: Text("$descricao"),
                 trailing: Icon(Icons.add_shopping_cart),
                 onTap: () {
-                  blocCart.addItem(CartItem(comidaNome, preco, idComida, 1));
+                  if(blocCart.items == null || idRestaurante == blocCart.items.first.restaurantId)
+                    blocCart.addItem(CartItem(comidaNome, preco, idComida, idRestaurante, 1));
+                  
+                  else
+                    showInfoDialog(
+                      context,
+                      "Erro",
+                      "Seu pedido só pode conter comidas de um único restaurante.",
+                      "Entendi",
+                    );
                 },
               ),
             );
