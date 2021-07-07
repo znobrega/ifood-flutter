@@ -9,10 +9,10 @@ class LoginController {
   Future handleLogin(email, password) async {
 
     if(!EmailValidator.validate(email))
-      return {"usuario":[]};
+      return {};
 
     if(!PasswordValidator.validate(password))
-      return {"usuario":[]};
+      return {};
 
     try {
       var response = await dio.get("${ENV.BASE_URL}/usuario", queryParameters: {"email": email, "senha": password});

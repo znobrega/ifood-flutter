@@ -79,7 +79,7 @@ class _LoginState extends State<Login> {
                         email.text = "";
                         password.text = "";
 
-                        if(res["usuario"].isEmpty)
+                        if(!res.containsKey("usuario") || res["usuario"].isEmpty)
                           showInfoDialog(
                               context,
                               "Erro",
